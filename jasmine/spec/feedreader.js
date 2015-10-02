@@ -1,9 +1,9 @@
 /*
 
-    Author: 'Yaz Khoury'
-    Date: 'October 2015'
-    Title: 'Jasmine Feed Reader Spec Testing'
-    Description: 'This is the spec file that Jasmine will read and contains all of the tests that will be run against feed reader application'
+	Author: 'Yaz Khoury'
+	Date: 'October 2015'
+	Title: 'Jasmine Feed Reader Spec Testing'
+	Description: 'This is the spec file that Jasmine will read and contains all of the tests that will be run against feed reader application'
 
  */
 
@@ -14,108 +14,109 @@
 
 $(function() {
 
-    'use strict';
+	'use strict';
 
-    // First Test Suite related to RSS Feeds and allFeeds variable
+	// First Test Suite related to RSS Feeds and allFeeds variable
 
-    describe('RSS Feeds', function() {
+	describe('RSS Feeds', function() {
 
-        // This is our first test. Ensures allFeeds variable is defined and not empty
+		// This is our first test. Ensures allFeeds variable is defined and not empty
 
-        it('All Feeds Are Defined', function() {
-            expect(allFeeds).toBeDefined();
-            expect(allFeeds.length).not.toBe(0);
-        });
+		it('All Feeds Are Defined', function() {
+			expect(allFeeds).toBeDefined();
+			expect(allFeeds.length).not.toBe(0);
+		});
 
-        // Ensures URLs are defined and not empty
+		// Ensures URLs are defined and not empty
 
-        it('url is given', function(){
-            for(var i = 0; i < allFeeds.length; i++){
-                expect(allFeeds[i].url).not.toBe(null);
-            }
-        });
+		it('URL is Given', function(){
+			for(var i = 0; i < allFeeds.length; i++){
+				expect(allFeeds[i].url).not.toBe(null);
+			}
+		});
 
-        // Ensures Names are defined and not empty
+		// Ensures Names are defined and not empty
 
-        it('name is given', function(){
-            for(var i = 0; i < allFeeds.length; i++){
-                expect(allFeeds[i].name).not.toBe(null);
-            }
-        });
-    });
-
-
-    // Second Test Suite related to Menu
-
-    describe('The menu', function(){
-
-        var body = $('body');
-        var menu = 'menu-hidden';
-        var menuIcon = $('.menu-icon-link')
-
-        // Test to Ensure Menu is hidden by default
-
-        it('menu is hidden by default', function(){
-            expect(body.hasClass(menu)).toBe(true);
-        });
+		it('Name is Given', function(){
+			for(var i = 0; i < allFeeds.length; i++){
+				expect(allFeeds[i].name).not.toBe(null);
+			}
+		});
+	});
 
 
-        // Test to Ensure Menu changes visibilty upon clicking the icon
+	// Second Test Suite related to Menu
 
-         it('menu changes visibility when clicked', function(){
+	describe('The Menu', function(){
 
-            body.removeClass();
-            body.addClass(menu);
+		var body = $('body');
+		var menu = 'menu-hidden';
+		var menuIcon = $('.menu-icon-link');
 
-            menuIcon.click();
-            expect(body.attr('class')).not.toBe(menu);
-            menuIcon.click();
-            expect(body.attr('class')).toBe(menu);
-         })
-    });
+		// Test to Ensure Menu is hidden by default
 
-    // Third Test Suite related to our Entries from the Load Feed
-
-    describe('Initial Entries', function(){
-
-        // Called before for making asynchronous activities
-
-        beforeEach(function(done){
-            loadFeed(0, done);
-        })
-
-        // Test to ensure a single entry at least in the feed
-
-         it('able to load entries', function(){
-            var rows = $('.entry').length;
-            expect(rows).toBeGreaterThan(0);
-         })
-    });
+		it('Menu is Hidden by Default', function(){
+			expect(body.hasClass(menu)).toBe(true);
+		});
 
 
-    // Fourth Test Suite for testing a new feed is being loaded
+		// Test to Ensure Menu changes visibilty upon clicking the icon
 
-    describe('New Feed Selection', function(){
+		it('Menu Changes Visibility When Clicked', function(){
+
+			body.removeClass();
+			body.addClass(menu);
+
+			menuIcon.click();
+			expect(body.attr('class')).not.toBe(menu);
+
+			menuIcon.click();
+			expect(body.attr('class')).toBe(menu);
+		});
+	});
+
+	// Third Test Suite related to our Entries from the Load Feed
+
+	describe('Initial Entries', function(){
+
+		// Called before for making asynchronous activities
+
+		beforeEach(function(done){
+			loadFeed(0, done);
+		});
+
+		// Test to ensure a single entry at least in the feed
+
+		it('Able to Load Entries', function(){
+			var rows = $('.entry').length;
+			expect(rows).toBeGreaterThan(0);
+		});
+	});
 
 
-        var texts;
+	// Fourth Test Suite for testing a new feed is being loaded
 
-        // Called before for making asynchronous activities
-
-         beforeEach(function(done){
-            $('.feed').empty();
-            loadFeed(0, function(){
-                texts = $('.feed').find('h2').text();
-                loadFeed(1, done);
-            });
-        })
-
-         // Ensuring new content is loaded when new feed is loaded
-         it('feed load changes content', function(done) {
-            expect($('.feed').find('h2').text()).not.toBe(texts);
-            done()
-         })
+	describe('New Feed Selection', function(){
 
 
-    });
+		var texts;
+
+		// Called before for making asynchronous activities
+
+		beforeEach(function(done){
+			$('.feed').empty();
+			loadFeed(0, function(){
+				texts = $('.feed').find('h2').text();
+				loadFeed(1, done);
+			});
+		});
+
+		// Ensuring new content is loaded when new feed is loaded
+		it('Feed Load Changes Content', function(done) {
+			expect($('.feed').find('h2').text()).not.toBe(texts);
+			done()
+		});
+
+	});
+
 }());
